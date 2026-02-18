@@ -1,0 +1,43 @@
+# Clash.Meta/Mihomo 配置（支持VLESS+REALITY）
+# 注意：需要使用 Clash.Meta 或 Mihomo 内核，普通Clash不支持VLESS
+
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+proxies:
+  - name: "153583435"
+    type: vless
+    server: 216.167.0.207
+    port: 59210
+    uuid: 5ecf3321-0ebe-4e44-96aa-b8bf74369146
+    network: tcp
+    udp: true
+    tls: true
+    servername: www.amazon.com
+    flow: xtls-rprx-vision
+    reality-opts:
+      public-key: fU_mDeeGtAU4oJaLtUDgjVU17Sap6nXLvBgti0dPf00
+      short-id: 96e3c740cde0bb
+    client-fingerprint: chrome
+
+proxy-groups:
+  - name: "PROXY"
+    type: select
+    proxies:
+      - "153583435"
+      - DIRECT
+
+rules:
+  - MATCH,PROXY
